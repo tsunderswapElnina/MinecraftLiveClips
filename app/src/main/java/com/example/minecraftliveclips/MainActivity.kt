@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,13 +18,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import top.yukonga.miuix.kmp.basic.Button
 import top.yukonga.miuix.kmp.basic.Card
-import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.SmallTitle
 import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.basic.TopAppBar
-import top.yukonga.miuix.kmp.basic.rememberTopAppBarState
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 import top.yukonga.miuix.kmp.theme.darkColorScheme
 
@@ -48,7 +48,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MinecraftLiveClipsApp() {
     val context = LocalContext.current
-    val scrollBehavior = MiuixScrollBehavior(rememberTopAppBarState())
     val clips = listOf(
         ClipItem(
             "Minecraft Live – Official Channel",
@@ -74,10 +73,7 @@ fun MinecraftLiveClipsApp() {
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = "Minecraft Live Clips",
-                scrollBehavior = scrollBehavior
-            )
+            TopAppBar(title = "Minecraft Live Clips")
         }
     ) { innerPadding ->
         LazyColumn(
@@ -93,22 +89,20 @@ fun MinecraftLiveClipsApp() {
             items(clips) { clip ->
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = {
-                        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(clip.url)))
-                    },
                     insideMargin = PaddingValues(16.dp)
                 ) {
-                    Text(text = clip.title)
-                    Text(
-                        text = clip.subtitle,
-                        modifier = Modifier.padding(top = 6.dp),
-                        color = MiuixTheme.colorScheme.onSurfaceVariantSummary
-                    )
-                    Text(
-                        text = "Open link",
-                        modifier = Modifier.padding(top = 10.dp),
-                        color = MiuixTheme.colorScheme.primary
-                    )
+                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Text(text = clip.title)
+                        Text(text = clip.subtitle)
+                        Button(
+                            onClick = {
+                                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(clip.url)))
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Open")
+                        }
+                    }
                 }
             }
         }

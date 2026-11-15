@@ -48,7 +48,7 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling-preview")
 
-    implementation("top.yukonga.miuix.kmp:miuix-ui:0.5.1")
+    implementation("top.yukonga.miuix.kmp:miuix-ui:0.9.4")
 
     debugImplementation("androidx.compose.ui:ui-tooling")
 }
